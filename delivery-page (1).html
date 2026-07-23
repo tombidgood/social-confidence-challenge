@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FBF8F2">
+<title>The 21-Day Social Confidence Challenge | Tom Bidgood</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF8F2; --paper-card:#FFFFFF; --ink:#2B2620; --ink-soft:#6B6459;
+    --line: rgba(43,38,32,0.10); --moss:#7D8B62; --moss-soft: rgba(125,139,98,0.14);
+    --clay:#C0925A; --clay-soft: rgba(192,146,90,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{ color-scheme:light;}
+  body{ background:var(--paper); color:var(--ink); font-family:'Inter', sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  .wrap{ max-width:760px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em;}
+
+  header{ padding:56px 0 32px; border-bottom:1px solid var(--line); text-align:center;}
+  header .eyebrow{
+    display:inline-flex; font-size:13px; font-weight:600; color:var(--moss);
+    background:var(--moss-soft); padding:6px 14px; border-radius:100px; margin-bottom:16px;
+  }
+  header h1{ font-size:clamp(26px,4.2vw,38px); margin-bottom:12px;}
+  header p{ color:var(--ink-soft); font-size:15.5px; max-width:480px; margin:0 auto;}
+
+  .progress-shell{ background:var(--paper-card); border:1px solid var(--line); border-radius:100px; height:8px; margin:26px auto 0; max-width:420px; overflow:hidden;}
+  .progress-fill{ background:var(--clay); height:100%; width:0%; border-radius:100px; transition:width .3s;}
+  .progress-label{ font-size:12.5px; color:var(--ink-soft); margin-top:10px;}
+
+  main{ padding:44px 0 80px;}
+  .part-title{ font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:var(--clay); font-weight:700; margin:44px 0 16px;}
+  .part-title:first-child{ margin-top:0;}
+
+  .day{ border:1px solid var(--line); border-radius:14px; background:var(--paper-card); margin-bottom:10px; overflow:hidden; box-shadow:0 4px 16px -12px rgba(43,38,32,0.12);}
+  .day-head{ display:flex; align-items:center; gap:16px; padding:18px 20px; cursor:pointer; user-select:none;}
+  .day-num{
+    font-family:'Fraunces', serif; font-weight:700; font-size:14px; color:var(--ink);
+    background:var(--moss-soft); width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s;
+  }
+  .day.done .day-num{ background:var(--moss); color:#fff;}
+  .day-title{ font-size:15.5px; font-weight:600; flex:1;}
+  .chevron{ color:var(--ink-soft); font-size:13px; transition:transform .2s;}
+  .day.open .chevron{ transform:rotate(90deg);}
+  .day-body{ display:none; padding:0 20px 24px;}
+  .day.open .day-body{ display:block;}
+  .video-embed{ aspect-ratio:16/9; width:100%; border-radius:10px; overflow:hidden; background:#000; border:none; margin-bottom:16px;}
+
+  .block{ margin-bottom:14px;}
+  .block .lbl{ font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--moss); font-weight:700; margin-bottom:7px;}
+  .block p{ font-size:14.5px; color:var(--ink-soft);}
+  .block ul{ list-style:none; display:grid; gap:6px;}
+  .block ul li{ font-size:14.5px; color:var(--ink-soft); padding-left:14px; position:relative;}
+  .block ul li::before{ content:"–"; position:absolute; left:0; color:var(--ink-soft);}
+  .block.task{ background:var(--clay-soft); border:1px solid var(--line); border-radius:10px; padding:16px 18px;}
+  .block.task p{ color:var(--ink);}
+  .block.task .lbl{ color:var(--clay);}
+  .block.why p{ font-style:italic; color:var(--ink-soft);}
+
+  .mark-done{
+    background:none; border:1px solid var(--line); color:var(--ink-soft);
+    font-size:13px; font-weight:600; padding:9px 16px; border-radius:100px; cursor:pointer; margin-top:6px;
+  }
+  .day.done .mark-done{ background:var(--moss); color:#fff; border-color:var(--moss);}
+
+  .call-cta{
+    margin:56px 0 0; background:var(--clay-soft); border:1px solid var(--line); border-radius:20px;
+    padding:40px 32px; text-align:center;
+  }
+  .call-cta .lbl{ font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--clay); font-weight:700; margin-bottom:12px;}
+  .call-cta h3{ font-size:24px; margin-bottom:12px;}
+  .call-cta p{ font-size:15px; color:var(--ink-soft); max-width:440px; margin:0 auto 24px;}
+  .call-cta .btn{
+    background:var(--ink); color:var(--paper); font-weight:600; font-size:15px;
+    padding:14px 30px; border-radius:100px; text-decoration:none; display:inline-block;
+  }
+
+  #lockedScreen, #checkingScreen{ display:none; text-align:center; padding:120px 24px;}
+  #lockedScreen h2, #checkingScreen h2{ font-size:26px; margin-bottom:14px;}
+  #lockedScreen p, #checkingScreen p{ color:var(--ink-soft); font-size:15px; max-width:420px; margin:0 auto 26px;}
+  #lockedScreen .btn{
+    background:var(--ink); color:var(--paper); font-weight:600; font-size:15px;
+    padding:14px 30px; border-radius:100px; text-decoration:none; display:inline-block;
+  }
+  #appContent{ display:none;}
+
+  footer{ padding:40px 0 60px; border-top:1px solid var(--line); text-align:center;}
+  footer p{ font-size:13px; color:var(--ink-soft);}
+
+  @media(max-width:480px){
+    .wrap{ padding:0 16px;}
+    header{ padding:40px 0 26px;}
+    header h1{ font-size:26px;}
+    .day-head{ padding:15px 14px; gap:12px;}
+    .day-title{ font-size:14.5px;}
+    .day-body{ padding:0 14px 20px;}
+    .block ul li, .block p{ font-size:14px;}
+    .call-cta{ padding:32px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="checkingScreen" style="display:block;">
+  <h2>Checking your access...</h2>
+  <p>One second while we confirm your purchase.</p>
+</div>
+
+<div id="lockedScreen">
+  <h2>This page is for challenge members only</h2>
+  <p>We couldn't verify a purchase for this page. If you've already bought the challenge, use the link from your confirmation email. Otherwise, grab it below.</p>
+  <a href="/" class="btn">Get the 21-Day Challenge</a>
+  <p style="margin-top:22px; font-size:13px;">Already paid but stuck? Email <a href="mailto:media@tombidgood.com" style="color:var(--ink); text-decoration:underline;">media@tombidgood.com</a> and I'll sort it.</p>
+</div>
+
+<div id="appContent">
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Your Challenge</div>
+    <h1>The 21-Day Social Confidence Challenge</h1>
+    <p>21 days. One video, one task, every day. Work through them in order, since each part builds on the last.</p>
+    <div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0 of 21 days complete</div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" id="dayList"></div>
+  <div class="wrap">
+    <div class="call-cta">
+      <div class="lbl">Want to talk it through?</div>
+      <h3>Book a free 15-minute call</h3>
+      <p>Whenever you're ready, book a free 15-minute call with me and we'll talk about what's still holding you back.</p>
+      <a href="https://calendly.com/tombidgood/your-private-1-1-on-boarding-call" class="btn">Book your free 15-minute call</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap"><p>Tom Bidgood · media@tombidgood.com</p></div>
+</footer>
+
+</div>
+
+<script>
+const DAYS = [
+  {part:"Part 1: What's actually holding you back", days:[
+    {n:1, title:"Stuck in your head", id:"1212290606",
+     task:"Say hello to 3–5 people throughout your day. It could be a colleague you don't speak to much, a cashier, someone at the gym, or someone walking past.",
+     tips:["Don't worry about starting a conversation.","Keep walking if you want to.","The goal is simply to take the first step."],
+     examples:["Morning!","Hey, how's it going?","Hi!"],
+     why:"When we feel nervous, we often avoid making the first move. By simply saying hello first, you're teaching your brain that initiating social interactions is safe. It's a small action, but it's the first step towards becoming someone who naturally starts conversations."},
+    {n:2, title:"Overthinking what to say", id:"1212286848",
+     task:"In your next conversation, make your only goal to learn one new thing about the other person.",
+     tips:["Don't worry about being interesting.","Focus entirely on them.","Be genuinely curious."],
+     examples:["What do you do outside of work?","How did you get into that?","What have you got planned this weekend?"],
+     why:"When your attention moves away from yourself, your fears naturally begin to decrease."},
+    {n:3, title:"Mind goes blank mid-conversation", id:"1212295484",
+     task:"Say the first thing that comes to mind in every conversation today. It doesn't need to be perfect, just trust your first thought and say it.",
+     tips:["Most conversations don't need the perfect response.","People care more about your presence than your wording.","If you're unsure what to say, say the obvious."],
+     examples:["That sounds fun.","Really?","I've never thought about that.","How come?","That's interesting."],
+     why:"The more you search for the perfect thing to say, the more pressure you put on yourself. Speaking your first natural thought teaches your brain that conversations don't need to be perfect. They just need to keep moving."},
+    {n:4, title:"Worrying about what they think", id:"1212292265",
+     task:"Slow down how you speak today. Don't rush. Take a breath, pause for two seconds, then continue naturally.",
+     tips:["Silence isn't awkward unless you decide it is.","Most people don't even notice short pauses.","Slow conversations often feel more confident."],
+     examples:["That's interesting...","I've never thought about it like that.","(Take a deep breath before responding.)"],
+     why:"Getting comfortable with silence removes the pressure to constantly perform."},
+    {n:5, title:"Not being present in the conversation", id:"1212286845",
+     task:"Share something about yourself in every conversation today: something you did recently, a hobby, a funny story, your weekend, or something you're looking forward to. Don't wait to be asked.",
+     tips:["Keep it simple.","Don't worry if it's not an amazing story.","People connect through sharing, not just asking questions.","Your experiences are more interesting than you think."],
+     examples:["I actually went hiking this weekend...","I've recently started...","That reminds me of something that happened to me...","I've been trying to get into...","I love doing that as well."],
+     why:"People often worry that what they have to say isn't interesting enough, so they keep conversations focused on the other person. By sharing a little more about yourself, you become more authentic, more memorable, and give the other person something to connect with."},
+  ]},
+  {part:"Part 2: How to take back control in a conversation", days:[
+    {n:6, title:"Calm your nerves exercise", id:"1212292536",
+     task:"Have one conversation today where your only focus is the other person: notice their eye colour, listen to every word, and repeat back part of what they said before answering.",
+     tips:["Slow down.","Stay curious.","Don't rehearse your next sentence while they're talking."],
+     examples:["So you've been there before?","You said you've just started a new job...","That sounds exciting."],
+     why:"The best conversations happen when you're fully present instead of stuck inside your own head."},
+    {n:7, title:"The external switch exercise", id:"1212294632",
+     task:"Before your next conversation that makes you nervous, write down 2-3 things that could go wrong, then flip it and write 2-3 things that could go right.",
+     tips:["Your brain is wired to scan for danger even when there isn't any. Writing it down interrupts that.","Notice how much bigger the positive list often is than the negative one.","This isn't about ignoring risk, it's about giving the upside equal airtime."],
+     examples:["What could go wrong: I say something awkward. What could go right: I make a new friend, or open a door to an opportunity I can't predict yet."],
+     why:"When you only picture what could go wrong, you train your brain to see danger. Deliberately switching your focus to what could go right trains it to see opportunity instead."},
+    {n:8, title:"The catch and release exercise", id:"1212292592",
+     task:"Reach out to one friend you haven't spoken to recently. Send a message that isn't just \"How are you?\" Ask something specific or suggest a catch-up. Even give them a call if you feel comfortable.",
+     tips:["Keep it short and genuine.","Offer a simple way to reconnect (coffee, phone call or a walk).","You're not trying to impress, just reconnect."],
+     examples:["\"Hey! I was thinking about the time we (fun memory), want to catch up soon?\"","\"I'd love to hear how (the project/job/hobby) is going, want to chat this week?\"","\"I saw this and it reminded me of you! Hope you are doing well mate!\""],
+     why:"Friendships grow when you nurture them. A lot of people drift apart simply because they stop reaching out. This task is about rebuilding connections with small actions."},
+    {n:9, title:"The pause hack", id:"1212291036",
+     task:"Call a family member and have a conversation for 10 minutes. Don't be afraid of awkward silences today, embrace them, and practice pausing before you speak.",
+     tips:["Silence isn't a problem you need to fix, it's just part of a real conversation.","If a pause happens, let it sit for a second before you jump in.","Use the pause to actually think about what you want to say."],
+     examples:["\"...\" (let a short silence sit) \"Anyway, how's everything with you?\"","\"Give me a second, let me think about that.\""],
+     why:"Most people rush to fill silence because it feels uncomfortable. Sitting with it, and pausing before you respond, teaches you that silence isn't dangerous, and it makes you sound more considered."},
+    {n:10, title:"Name the thought", id:"1212295485",
+     task:"Focus on being the person who sets the vibe in every interaction today. Use lively body language, and show genuine interest in the people you meet. Notice how your energy influences the mood of the conversation. Consciously lead the energy, rather than waiting for the other person to set it.",
+     tips:["Keep your attention on your mood and engagement instead of theirs.","Be mindful of tone, posture, and facial expressions. Small cues communicate energy.","Focus on genuine interest rather than performing; authenticity amplifies your energy."],
+     examples:["Greeting a colleague: \"Hey! How's your day going?\" with a smile and open posture.","Responding with enthusiasm: \"That's awesome! Tell me more.\"","Using gestures and tone to show interest naturally."],
+     why:"Bringing your own energy sets the atmosphere, encourages engagement, and builds confidence. It creates positive, memorable interactions."},
+    {n:11, title:"Repeat and respond", id:"1212289242",
+     task:"In one conversation today, repeat back the last thing someone said as a short question, before you respond properly.",
+     tips:["Keep it to a couple of words, not a full sentence.","It buys you a second to think of a real response.","It shows the other person you're actually listening."],
+     examples:["\"I went to the dentist today.\" \"The dentist?\"","\"I've had such a long week.\" \"A long week?\"","\"We're thinking of moving house.\" \"Moving house?\""],
+     why:"Repeating back a small part of what someone said proves you're listening, and it naturally invites them to say more without you needing to think of a clever follow-up question."},
+  ]},
+  {part:"Part 3: Your conversation toolkit", days:[
+    {n:12, title:"The purpose of conversation starters", id:"1212289051",
+     task:"Greet as many strangers as possible today. Say \"morning\" or \"hi\" to people walking past. Greet cashiers or staff before ordering. Say hi to someone at work or school you don't usually talk to.",
+     tips:["Smile and make brief eye contact.","Keep it casual and natural.","No need to force a conversation, you are just practicing approaching."],
+     examples:["\"Morning!\"","\"Hi! How are you?\"","\"Hey! Have a good day!\""],
+     why:"Frequent small interactions build social courage and reduce fear of approaching strangers."},
+    {n:13, title:"The formula behind every good opener", id:"1212293773",
+     task:"Think of someone you see regularly but have never actually spoken to, a neighbour, someone on your commute, a face you recognise at the gym, and speak to them today.",
+     tips:["You already recognise them, so this is lower pressure than talking to a total stranger.","Keep it brief, a quick word or gesture is enough.","You don't need a big reason, \"I always see you around\" is reason enough."],
+     examples:["\"Hey, I always see you here, I don't think we've actually spoken. I'm Tom.\"","\"Morning! We're always here at the same time, aren't we?\"","\"Hi, don't think we've met properly, have we?\""],
+     why:"These are often the easiest people to talk to, since some familiarity already exists, but they're also the ones we put off speaking to the longest. Breaking that pattern once makes it much easier the next time."},
+    {n:14, title:"The random opener", id:"1212289232",
+     task:"Start one conversation using the 'this is really random but...' opener.",
+     tips:["Make it fun.","It doesn't have to be clever.","Comment on something you're genuinely interested in."],
+     examples:["This is really random but, I love your shoes.","This is really random but I love the book you're reading.","This is really random but do you know where...?"],
+     why:"Starting with 'really random' breaks the ice instantly and makes the other person feel more comfortable."},
+    {n:15, title:"The observation opener", id:"1212286847",
+     task:"Start one conversation using an observation about something around you.",
+     tips:["Keep your observation simple.","It doesn't have to be funny or clever.","Comment on something you can both already see."],
+     examples:["This café is always busy!","That's a really nice dog!","Looks like it's finally stopped raining.","That queue is taking forever."],
+     why:"Observation openers feel natural because you're simply commenting on something both of you can already see. They remove the pressure of thinking of something interesting to say."},
+    {n:16, title:"The compliment opener", id:"1212292718",
+     task:"Give one genuine compliment to someone today.",
+     tips:["Make it genuine.","Smile when you say it.","Focus on something they've chosen or put effort into."],
+     examples:["I really like your trainers.","That's a cool jacket.","Your energy is really positive."],
+     why:"Giving compliments is one of the easiest ways to start conversations. It makes the other person feel good while helping you become more comfortable approaching people."},
+    {n:17, title:"The shared situation opener", id:"1212289483",
+     task:"Start one conversation with someone using a shared situation.",
+     tips:["Use what's happening around you.","Keep it relaxed.","Let the conversation develop naturally."],
+     examples:["Have you been waiting long?","Is this your first time here?","It's freezing today, isn't it?","This queue's moving pretty slowly."],
+     why:"Shared situations create instant common ground, making conversations feel more natural and easier to begin."},
+    {n:18, title:"The opinion opener", id:"1212286844",
+     task:"Ask one person for their opinion today.",
+     tips:["Keep it light-hearted.","Be genuinely interested in their answer.","There are no right or wrong opinions."],
+     examples:["Which coffee would you choose?","Have you watched that series?","Would you recommend that?","What's your favourite place around here?"],
+     why:"People enjoy sharing their opinions. Asking for one is an easy way to create a conversation without feeling forced."},
+    {n:19, title:"The small fault opener", id:"1212290585",
+     task:"Share one small flaw or mistake about yourself in a conversation today.",
+     tips:["Keep it light-hearted.","Don't try to appear perfect.","Small imperfections make you more relatable."],
+     examples:["I'm terrible with names.","I always get lost around here.","I'm awful at choosing what to order."],
+     why:"Trying to appear perfect creates pressure. Sharing a small imperfection helps you feel more authentic and encourages the other person to relax around you too."},
+    {n:20, title:"The help opener", id:"1212294750",
+     task:"Ask one person for a small favour or piece of advice today.",
+     tips:["Keep your request simple.","Be friendly.","Thank them afterwards."],
+     examples:["Do you know where...?","Which one would you choose?","Could you recommend something from the menu?","Have you used this before?"],
+     why:"Most people enjoy being helpful. Asking for help is a simple, low-pressure way to begin a conversation and build confidence approaching others."},
+    {n:21, title:"The introduction opener", id:"1212295148",
+     task:"For your final challenge, cold approach a stranger and introduce yourself. It doesn't matter how it goes, just do your best to introduce yourself and try to make a new friend.",
+     tips:["Smile first and keep your energy relaxed.","Use anything from the last 21 days, an opener, a compliment, an observation.","The result doesn't matter here, showing up and trying is the whole point."],
+     examples:["Hey, I'm Tom. I don't think we've met before.","Hi, I'm Tom.","Thought I'd come and introduce myself."],
+     why:"This is the moment everything from the last 20 days builds towards. One cold approach, done for its own sake, is proof that you can do this whenever you choose to."},
+  ]},
+];
+
+const list = document.getElementById('dayList');
+let totalDays = 0;
+
+DAYS.forEach(section => {
+  const h = document.createElement('div');
+  h.className = 'part-title';
+  h.textContent = section.part;
+  list.appendChild(h);
+
+  section.days.forEach(d => {
+    totalDays++;
+    const el = document.createElement('div');
+    el.className = 'day';
+    el.id = 'day-' + d.n;
+    el.innerHTML = `
+      <div class="day-head" onclick="toggleDay(${d.n})">
+        <div class="day-num">${d.n}</div>
+        <div class="day-title">Day ${d.n}: ${d.title}</div>
+        <div class="chevron">›</div>
+      </div>
+      <div class="day-body">
+        <iframe class="video-embed" src="https://player.vimeo.com/video/${d.id}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+        <div class="block task"><div class="lbl">Today's task</div><p>${d.task}</p></div>
+        <div class="block"><div class="lbl">Tips</div><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+        <div class="block"><div class="lbl">Examples (what to actually say)</div><ul>${d.examples.map(t=>`<li>"${t}"</li>`).join('')}</ul></div>
+        <div class="block why"><div class="lbl">Why this works</div><p>${d.why}</p></div>
+        <button class="mark-done" onclick="toggleDone(${d.n}, event)">Mark day complete</button>
+      </div>`;
+    list.appendChild(el);
+  });
+});
+
+document.getElementById('progressLabel').textContent = `0 of ${totalDays} days complete`;
+
+function toggleDay(n){
+  document.getElementById('day-' + n).classList.toggle('open');
+}
+function toggleDone(n, e){
+  e.stopPropagation();
+  const el = document.getElementById('day-' + n);
+  el.classList.toggle('done');
+  const doneCount = document.querySelectorAll('.day.done').length;
+  document.getElementById('progressFill').style.width = (doneCount/totalDays*100) + '%';
+  document.getElementById('progressLabel').textContent = `${doneCount} of ${totalDays} days complete`;
+  const btn = el.querySelector('.mark-done');
+  btn.textContent = el.classList.contains('done') ? 'Completed ✓' : 'Mark day complete';
+}
+
+// --- Access verification ---
+(function checkAccess(){
+  const checking = document.getElementById('checkingScreen');
+  const locked = document.getElementById('lockedScreen');
+  const app = document.getElementById('appContent');
+
+  function grantAccess(){
+    localStorage.setItem('scc_unlocked', 'true');
+    checking.style.display = 'none';
+    locked.style.display = 'none';
+    app.style.display = 'block';
+  }
+
+  function denyAccess(){
+    checking.style.display = 'none';
+    app.style.display = 'none';
+    locked.style.display = 'block';
+  }
+
+  if (localStorage.getItem('scc_unlocked') === 'true') {
+    grantAccess();
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+
+  if (!sessionId) {
+    denyAccess();
+    return;
+  }
+
+  fetch('/.netlify/functions/verify-session?session_id=' + encodeURIComponent(sessionId))
+    .then(res => res.json())
+    .then(data => {
+      if (data.valid) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+        grantAccess();
+      } else {
+        denyAccess();
+      }
+    })
+    .catch(() => denyAccess());
+})();
+</script>
+
+</body>
+</html>
