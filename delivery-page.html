@@ -295,7 +295,22 @@ DAYS.forEach(section => {
   });
 });
 
-document.getElementById('progressLabel').textContent = `0 of ${totalDays} days complete`;
+// Restore any previously saved progress
+(function restoreProgress(){
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem('scc_progress') || '[]'); } catch(e){ saved = []; }
+  saved.forEach(n => {
+    const el = document.getElementById('day-' + n);
+    if (el) {
+      el.classList.add('done');
+      const btn = el.querySelector('.mark-done');
+      if (btn) btn.textContent = 'Completed ✓';
+    }
+  });
+  const doneCount = document.querySelectorAll('.day.done').length;
+  document.getElementById('progressFill').style.width = (doneCount/totalDays*100) + '%';
+  document.getElementById('progressLabel').textContent = `${doneCount} of ${totalDays} days complete`;
+})();
 
 function toggleDay(n){
   document.getElementById('day-' + n).classList.toggle('open');
@@ -309,6 +324,10 @@ function toggleDone(n, e){
   document.getElementById('progressLabel').textContent = `${doneCount} of ${totalDays} days complete`;
   const btn = el.querySelector('.mark-done');
   btn.textContent = el.classList.contains('done') ? 'Completed ✓' : 'Mark day complete';
+
+  // Save progress so it survives a refresh
+  const completed = Array.from(document.querySelectorAll('.day.done')).map(d => parseInt(d.id.replace('day-', ''), 10));
+  localStorage.setItem('scc_progress', JSON.stringify(completed));
 }
 
 // --- Access verification ---
