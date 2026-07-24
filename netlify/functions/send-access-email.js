@@ -36,7 +36,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    await fetch('https://api.resend.com/emails', {
+    const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
@@ -54,6 +54,13 @@ exports.handler = async (event) => {
         `,
       }),
     });
+
+    if (!resendResponse.ok) {
+      const errorBody = await resendResponse.text();
+      console.error('Resend rejected the email:', resendResponse.status, errorBody);
+    } else {
+      console.log('Email sent successfully to', customerEmail);
+    }
   } catch (err) {
     // Even if the email fails to send, don't error out to Stripe,
     // otherwise Stripe will keep retrying this webhook.
