@@ -43,7 +43,7 @@ exports.handler = async (event) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Tom Bidgood <onboarding@resend.dev>',
+        from: 'Tom Bidgood <hello@send.tombidgood.com>',
         to: customerEmail,
         subject: 'Your 21-Day Social Confidence Challenge is ready!',
         html: `
