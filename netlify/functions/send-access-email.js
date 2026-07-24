@@ -49,7 +49,7 @@ exports.handler = async (event) => {
         html: `
           <p>Thanks for joining the 21-Day Social Confidence Challenge!</p>
           <p>Here's your permanent link, bookmark this or keep this email safe:</p>
-          <p><a href="https://socialconfidencechallenge.tombidgood.com/delivery-page.html">Access your challenge here</a></p>
+          <p><a href="https://socialconfidencechallenge.tombidgood.com/delivery-page.html?session_id=${session.id}">Access your challenge here</a></p>
           <p>See you on Day 1,<br>Tom</p>
         `,
       }),
